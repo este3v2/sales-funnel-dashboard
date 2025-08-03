@@ -45,26 +45,18 @@ jobs:
           python auto_report.py --input "data/sales_snapshot.xlsx" --out output
           cp output/sales_funnel_dashboard.html output/index.html
 
-                - name: Configure GitHub Pages
-        uses: actions/configure-pages@v5
-
       - name: Ensure index.html exists & show output listing
         run: |
           set -e
           test -f output/sales_funnel_dashboard.html || { echo "ERROR: sales_funnel_dashboard.html missing"; exit 1; }
-          # If index.html missing, create it from the dashboard HTML
           test -f output/index.html || cp output/sales_funnel_dashboard.html output/index.html
           echo "---- OUTPUT DIR ----"
           ls -lah output
           echo "---- INDEX HEAD ----"
           head -n 30 output/index.html
 
-      - name: Upload output for debugging (temporary)
-        uses: actions/upload-artifact@v4
-        with:
-          name: site-output
-          path: output
-
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
 
       - name: Upload static site
         uses: actions/upload-pages-artifact@v3
