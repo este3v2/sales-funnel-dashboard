@@ -104,6 +104,13 @@ def build_dashboard(input_xlsx: Path, out_dir: Path):
     ]
     summary_df = pd.DataFrame(summary_rows, columns=["Metric","Value"])
 
+        # ---- Save CSVs ----
+    funnel_csv = out_dir / "sales_funnel_dashboard.csv"
+    summary_csv = out_dir / "sales_summary_metrics.csv"
+    funnel_df.to_csv(funnel_csv, index=False)
+    summary_df.to_csv(summary_csv, index=False)
+
+
     # charts
     plt.figure(figsize=(8,5))
     funnel_df.plot(x="Stage", y="Deals", kind="barh", legend=False)
